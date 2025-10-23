@@ -1,22 +1,14 @@
-/* base resets and styles */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+/* ensure layout transitions are smooth and text colors follow theme */
+.app-sidebar {
+  box-sizing: border-box;
 }
 
-/* simple card like white panel */
-.card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-  min-height: 420px;
+/* avoid layout shift on small screen */
+.site-layout {
+  transition: margin-left 200ms ease;
 }
 
-/* compact mode reduces paddings and control heights */
-.compact .ant-form-item {
-  margin-bottom: 8px;
-}
-.compact .card {
-  padding: 12px;
+/* make content area use the theme background */
+.site-layout .ant-layout-content {
+  transition: background-color 200ms ease;
 }

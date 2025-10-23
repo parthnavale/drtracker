@@ -1,34 +1,44 @@
-import React from "react";
-import { Layout, Button, Space, Avatar } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined, SettingOutlined } from "@ant-design/icons";
+import React, { useContext } from "react";
+import { Button, Layout } from "antd";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { ThemeContext } from "../themeContext";
 
 const { Header } = Layout;
 
 export default function HeaderBar({ collapsed, onToggle, onOpenCustomizer }) {
+  const { tokens } = useContext(ThemeContext);
+
   return (
     <Header
       style={{
-        background: "#00b896",
         padding: "0 16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        color: "#fff",
-        position: "sticky",
-        top: 0,
-        zIndex: 10,
+        background: tokens?.headerBg || "#fff",
+        borderBottom: `1px solid ${tokens?.borderColor || "#f0f0f0"}`,
       }}
     >
-      <Space align="center">
-        <Button type="text" onClick={onToggle} style={{ color: "#fff" }}>
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <Button
+          type="text"
+          onClick={onToggle}
+          aria-pressed={collapsed}
+          style={{
+            color: tokens?.colorPrimary || "#1890ff",
+            fontSize: 18,
+            padding: "4px 8px",
+          }}
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        />
+        <h4 style={{ margin: 0, color: tokens?.colorText }}>App Title</h4>
+      </div>
+
+      <div>
+        <Button onClick={onOpenCustomizer} type="primary" style={{ backgroundColor: tokens?.colorPrimary }}>
+          Customize
         </Button>
-        <div style={{ fontWeight: 700 }}>Dr. [Name] - General Physician</div>
-      </Space>
-      <Space>
-        <Button shape="circle" type="text" onClick={onOpenCustomizer} icon={<SettingOutlined />} style={{ color: "#fff" }} />
-        <Avatar style={{ background: "#fff", color: "#00b896" }}>D</Avatar>
-      </Space>
+      </div>
     </Header>
   );
 }

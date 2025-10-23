@@ -1,38 +1,60 @@
-import React from "react";
-import { Layout, Menu } from "antd";
-import {
-  HomeOutlined,
-  UserAddOutlined,
-  MedicineBoxOutlined,
-  BarChartOutlined,
-} from "@ant-design/icons";
+import React, { useContext } from "react";
+import { Menu } from "antd";
+import { ThemeContext } from "../themeContext";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 
-const { Sider } = Layout;
+export default function Sidebar({ collapsed }) {
+  const { tokens } = useContext(ThemeContext);
 
-export default function Sidebar({ collapsed = false }) {
+  // When collapsed === true we hide completely (width 0).
+  const sidebarWidth = collapsed ? 0 : 200;
+
   return (
-    <Sider
-      trigger={null}
-      collapsible
-      collapsed={collapsed}
-      width={200}
+    <aside
+      className="app-sidebar"
       style={{
+        width: sidebarWidth,
+        transition: "width 200ms ease, background-color 200ms ease",
+        overflow: "hidden",
+        background: tokens?.sidebarBg || "#001529",
         height: "100vh",
         position: "fixed",
         left: 0,
         top: 0,
-        bottom: 0,
+        zIndex: 100,
+        borderRight: `1px solid ${tokens?.borderColor || "rgba(0,0,0,0.06)"}`,
       }}
+      aria-hidden={collapsed}
     >
-      <div className="logo" style={{ padding: 16, color: "#fff", fontWeight: 700 }}>
-        DrTracker
+      <div
+        className="sidebar-inner"
+        style={{
+          width: sidebarWidth,
+          padding: sidebarWidth === 0 ? 0 : 16,
+        }}
+      >
+        {/* optional logo area */}
+        {sidebarWidth !== 0 && (
+          <div style={{ marginBottom: 12 }}>
+            <h3 style={{ color: tokens?.colorText || "#fff", margin: 0 }}>App</h3>
+          </div>
+        )}
+
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          style={{
+            background: "transparent",
+            border: "none",
+            color: tokens?.colorText || "#fff",
+          }}
+          items={[
+            { key: "1", icon: <HomeOutlined />, label: "Dashboard" },
+            { key: "2", icon: <UserOutlined />, label: "Patients" },
+          ]}
+        />
       </div>
-      <Menu theme="light" mode="inline" defaultSelectedKeys={["add"]}>
-        <Menu.Item key="overview" icon={<HomeOutlined />}>Overview</Menu.Item>
-        <Menu.Item key="add" icon={<UserAddOutlined />}>Add New Patient</Menu.Item>
-        <Menu.Item key="stock" icon={<MedicineBoxOutlined />}>Medicine Stock</Menu.Item>
-        <Menu.Item key="insights" icon={<BarChartOutlined />}>Patient Insights</Menu.Item>
-      </Menu>
-    </Sider>
+    </aside>
   );
 }
