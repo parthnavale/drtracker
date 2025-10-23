@@ -25,7 +25,13 @@ export default function App() {
     <ConfigProvider theme={antdTheme}>
       <Layout style={{ minHeight: "100vh" }}>
         <Sidebar collapsed={collapsed} />
-        <Layout className={`site-layout ${tokens.compact ? "compact" : ""}`} style={{ marginLeft: collapsed ? 80 : 200, transition: "margin-left 0.2s" }}>
+        <Layout
+          className={`site-layout ${tokens.compact ? "compact" : ""}`}
+          style={{
+            marginLeft: collapsed ? 80 : 200,
+            transition: "margin-left 0.2s",
+          }}
+        >
           <HeaderBar
             collapsed={collapsed}
             onToggle={() => setCollapsed(!collapsed)}
@@ -38,7 +44,10 @@ export default function App() {
             </div>
           </Content>
         </Layout>
-        <ThemeCustomizer open={customizerOpen} onClose={() => setCustomizerOpen(false)} />
+        <ThemeCustomizer
+          open={customizerOpen}
+          onClose={() => setCustomizerOpen(false)}
+        />
       </Layout>
     </ConfigProvider>
   );
