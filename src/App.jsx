@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ConfigProvider, Layout } from "antd";
 import Sidebar from "./components/Sidebar";
 import HeaderBar from "./components/HeaderBar";
-import AddPatientForm from "./components/AddPatientForm";
 import ThemeCustomizer from "./components/ThemeCustomizer";
+import OverviewPage from "./pages/OverviewPage";
+import PatientsPage from "./pages/PatientsPage";
 import { ThemeContext } from "./themeContext";
 import "./index.css";
 
@@ -28,7 +30,7 @@ export default function App() {
         <Layout
           className={`site-layout ${tokens.compact ? "compact" : ""}`}
           style={{
-            marginLeft: collapsed ? 80 : 200,
+            marginLeft: collapsed ? 0 : 200,
             transition: "margin-left 0.2s",
           }}
         >
@@ -37,11 +39,17 @@ export default function App() {
             onToggle={() => setCollapsed(!collapsed)}
             onOpenCustomizer={() => setCustomizerOpen(true)}
           />
-          <Content style={{ padding: "24px" }}>
-            <div className="card">
-              <h2>Add New Patient</h2>
-              <AddPatientForm />
-            </div>
+          <Content 
+            style={{ 
+              background: '#f0f2f5',
+              minHeight: 'calc(100vh - 64px)'
+            }}
+          >
+            <Routes>
+              <Route path="/overview" element={<OverviewPage />} />
+              <Route path="/patients" element={<PatientsPage />} />
+              <Route path="/" element={<Navigate to="/overview" replace />} />
+            </Routes>
           </Content>
         </Layout>
         <ThemeCustomizer

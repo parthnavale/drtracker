@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Layout } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { MenuUnfoldOutlined, MenuFoldOutlined, BgColorsOutlined } from "@ant-design/icons";
 import { ThemeContext } from "../themeContext";
 
 const { Header } = Layout;
@@ -11,32 +11,53 @@ export default function HeaderBar({ collapsed, onToggle, onOpenCustomizer }) {
   return (
     <Header
       style={{
-        padding: "0 16px",
+        padding: "0 24px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        background: tokens?.headerBg || "#fff",
-        borderBottom: `1px solid ${tokens?.borderColor || "#f0f0f0"}`,
+        background: "#fff",
+        borderBottom: "1px solid #f0f0f0",
+        height: 64,
+        lineHeight: '64px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 99
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <Button
           type="text"
           onClick={onToggle}
-          aria-pressed={collapsed}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           style={{
-            color: tokens?.colorPrimary || "#1890ff",
             fontSize: 18,
-            padding: "4px 8px",
+            width: 40,
+            height: 40,
+            color: tokens.colorPrimary
           }}
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         />
-        <h4 style={{ margin: 0, color: tokens?.colorText }}>App Title</h4>
+        <h1 style={{ 
+          margin: 0, 
+          fontSize: '20px', 
+          fontWeight: '600',
+          color: '#262626'
+        }}>
+          DrTracker
+        </h1>
       </div>
 
       <div>
-        <Button onClick={onOpenCustomizer} type="primary" style={{ backgroundColor: tokens?.colorPrimary }}>
-          Customize
+        <Button 
+          onClick={onOpenCustomizer} 
+          type="primary" 
+          icon={<BgColorsOutlined />}
+          style={{ 
+            background: tokens.colorPrimary,
+            borderColor: tokens.colorPrimary
+          }}
+        >
+          Customize Theme
         </Button>
       </div>
     </Header>

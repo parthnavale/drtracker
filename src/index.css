@@ -1,14 +1,74 @@
-/* ensure layout transitions are smooth and text colors follow theme */
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Layout transitions */
 .app-sidebar {
   box-sizing: border-box;
 }
 
-/* avoid layout shift on small screen */
 .site-layout {
   transition: margin-left 200ms ease;
 }
 
-/* make content area use the theme background */
 .site-layout .ant-layout-content {
   transition: background-color 200ms ease;
+}
+
+/* Ant Design Table Customization */
+.ant-table-thead > tr > th {
+  background: #fafafa !important;
+  color: #666 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: 16px !important;
+}
+
+.ant-table-tbody > tr > td {
+  padding: 16px !important;
+  font-size: 14px !important;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: #fafafa !important;
+}
+
+/* Card Hover Effects */
+.ant-card-hoverable:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Search Input */
+.ant-input-affix-wrapper {
+  border-radius: 8px !important;
+}
+
+.ant-input-affix-wrapper-focused {
+  border-color: #00b896 !important;
+  box-shadow: 0 0 0 2px rgba(0, 184, 150, 0.1) !important;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .site-layout {
+    margin-left: 0 !important;
+  }
 }
