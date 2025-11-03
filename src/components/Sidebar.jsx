@@ -1,15 +1,13 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
-import { ThemeContext } from "../themeContext";
+import { HomeOutlined, UserOutlined, MedicineBoxOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
 
 export default function Sidebar({ collapsed }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { tokens } = useContext(ThemeContext);
 
   const menuItems = useMemo(() => [
     {
@@ -23,6 +21,12 @@ export default function Sidebar({ collapsed }) {
       icon: <UserOutlined />,
       label: "Patients",
       onClick: () => navigate("/patients"),
+    },
+    {
+      key: "/medicine-stock",
+      icon: <MedicineBoxOutlined />,
+      label: "Medicine Stock",
+      onClick: () => navigate("/medicine-stock"),
     },
   ], [navigate]);
 

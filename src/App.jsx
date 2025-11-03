@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ConfigProvider, Layout } from "antd";
+import { ConfigProvider, Layout, Spin } from "antd";
 import Sidebar from "./components/Sidebar";
 import HeaderBar from "./components/HeaderBar";
 import ThemeCustomizer from "./components/ThemeCustomizer";
 import OverviewPage from "./pages/OverviewPage";
 import PatientsPage from "./pages/PatientsPage";
+import MedicineStockPage from "./pages/MedicineStockPage";
 import { ThemeContext } from "./themeContext";
 import "./index.css";
 
@@ -45,11 +46,23 @@ export default function App() {
               minHeight: 'calc(100vh - 64px)'
             }}
           >
-            <Routes>
-              <Route path="/overview" element={<OverviewPage />} />
-              <Route path="/patients" element={<PatientsPage />} />
-              <Route path="/" element={<Navigate to="/overview" replace />} />
-            </Routes>
+            <Suspense fallback={
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh' 
+              }}>
+                <Spin size="large" />
+              </div>
+            }>
+              <Routes>
+                <Route path="/overview" element={<OverviewPage />} />
+                <Route path="/patients" element={<PatientsPage />} />
+                <Route path="/medicine-stock" element={<MedicineStockPage />} />
+                <Route path="/" element={<Navigate to="/overview" replace />} />
+              </Routes>
+            </Suspense>
           </Content>
         </Layout>
         <ThemeCustomizer

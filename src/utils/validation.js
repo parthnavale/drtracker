@@ -9,7 +9,7 @@ export const validatePhone = (_, value) => {
         return Promise.resolve();
     }
     
-    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
     
     if (!phoneRegex.test(value)) {
         return Promise.reject(new Error('Please enter a valid phone number'));
