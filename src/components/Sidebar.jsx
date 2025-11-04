@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
-import { HomeOutlined, UserOutlined, MedicineBoxOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined, MedicineBoxOutlined, FundOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
 
@@ -21,6 +21,12 @@ export default function Sidebar({ collapsed }) {
       icon: <UserOutlined />,
       label: "Patients",
       onClick: () => navigate("/patients"),
+    },
+    {
+      key: "/patient-insights",
+      icon: <FundOutlined />,
+      label: "Patient Insights",
+      onClick: () => navigate("/patient-insights"),
     },
     {
       key: "/medicine-stock",

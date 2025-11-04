@@ -1,8 +1,13 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { Card, Row, Col, Table, Button, Badge, Tag } from 'antd';
-import { PlusOutlined, MedicineBoxOutlined } from '@ant-design/icons';
+import React, { useState, useMemo, useCallback, useContext } from 'react';
+import { Card, Row, Col, Table, Button, Badge, Tag, Modal, Form, Input, InputNumber } from 'antd';
+import { PlusOutlined, MedicineBoxOutlined, CloseOutlined } from '@ant-design/icons';
+import { ThemeContext } from '../themeContext';
 
 const MedicineStockPage = () => {
+    const { tokens } = useContext(ThemeContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [form] = Form.useForm();
+
     // Sample medicine data
     const [medicines] = useState([
         { id: 1, name: 'Paracetamol', dosage: '500mg', category: 'Pain Relief', stock: 150, price: 2.5, manufacturer: 'GSK', status: 'In Stock' },
@@ -25,6 +30,22 @@ const MedicineStockPage = () => {
         
         return { total, wellStocked, lowStock, criticalStock };
     }, [medicines]);
+
+    // Handle modal open/close
+    const handleOpenModal = useCallback(() => {
+        setIsModalOpen(true);
+    }, []);
+
+    const handleCloseModal = useCallback(() => {
+        setIsModalOpen(false);
+        form.resetFields();
+    }, [form]);
+
+    const handleAddMedicine = useCallback((values) => {
+        console.log('New medicine:', values);
+        // Add medicine logic here
+        handleCloseModal();
+    }, [handleCloseModal]);
 
     // Status tag renderer
     const getStatusTag = useCallback((status) => {
@@ -106,7 +127,7 @@ const MedicineStockPage = () => {
                 <Button 
                     type="link" 
                     style={{ 
-                        color: '#00b896',
+                        color: tokens.colorPrimary,
                         padding: 0,
                         fontWeight: 500
                     }}
@@ -290,9 +311,10 @@ const MedicineStockPage = () => {
                     <Button 
                         type="primary" 
                         icon={<PlusOutlined />}
+                        onClick={handleOpenModal}
                         style={{ 
-                            background: '#00b896',
-                            borderColor: '#00b896',
+                            background: tokens.colorPrimary,
+                            borderColor: tokens.colorPrimary,
                             fontWeight: 500
                         }}
                     >
@@ -321,6 +343,114 @@ const MedicineStockPage = () => {
                     />
                 </Card>
             </div>
+
+            {/* Add Medicine Modal */}
+            <Modal
+                title="Add New Medicine"
+                open={isModalOpen}
+                onCancel={handleCloseModal}
+                footer={null}
+                closeIcon={<CloseOutlined />}
+                width={520}
+                centered
+            >
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={handleAddMedicine}
+                    style={{ marginTop: 24 }}
+                >
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Medicine Name"
+                                name="name"
+                                rules={[{ required: true, message: 'Please enter medicine name' }]}
+                            >
+                                <Input placeholder="Enter medicine name" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Dosage"
+                                name="dosage"
+                                rules={[{ required: true, message: 'Please enter dosage' }]}
+                            >
+                                <Input placeholder="e.g. 500mg" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Stock Quantity"
+                                name="stock"
+                                rules={[{ required: true, message: 'Please enter quantity' }]}
+                            >
+                                <InputNumber 
+                                    placeholder="Enter quantity" 
+                                    style={{ width: '100%' }}
+                                    min={0}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Category"
+                                name="category"
+                                rules={[{ required: true, message: 'Please enter category' }]}
+                            >
+                                <Input placeholder="e.g. Pain Relief" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Price (₹)"
+                                name="price"
+                                rules={[{ required: true, message: 'Please enter price' }]}
+                            >
+                                <InputNumber 
+                                    placeholder="Enter price" 
+                                    style={{ width: '100%' }}
+                                    min={0}
+                                    step={0.01}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item
+                                label="Manufacturer"
+                                name="manufacturer"
+                                rules={[{ required: true, message: 'Please enter manufacturer' }]}
+                            >
+                                <Input placeholder="Enter manufacturer name" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Form.Item style={{ marginBottom: 0, marginTop: 24 }}>
+                        <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                            <Button onClick={handleCloseModal}>
+                                Cancel
+                            </Button>
+                            <Button 
+                                type="primary" 
+                                htmlType="submit"
+                                style={{ 
+                                    background: tokens.colorPrimary,
+                                    borderColor: tokens.colorPrimary
+                                }}
+                            >
+                                Add Medicine
+                            </Button>
+                        </div>
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     );
 };

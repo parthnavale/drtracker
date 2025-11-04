@@ -1,12 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { usePatients } from '../context/PatientContext';
 import { Card, Input, Row, Col, Button, Table } from 'antd';
 import { SearchOutlined, UserOutlined, CalendarOutlined, PlusCircleOutlined, MedicineBoxOutlined } from '@ant-design/icons';
 import { useSearch } from '../hooks/useDataManagement';
+import { ThemeContext } from '../themeContext';
 
 const { Search } = Input;
 
 const OverviewPage = () => {
+    const { tokens } = useContext(ThemeContext);
     const { patients } = usePatients();
 
     const today = new Date();
@@ -54,7 +56,7 @@ const OverviewPage = () => {
                 <Button 
                     type="link" 
                     style={{ 
-                        color: '#00b896',
+                        color: tokens.colorPrimary,
                         padding: 0,
                         fontWeight: 500
                     }}
@@ -146,7 +148,7 @@ const OverviewPage = () => {
                                     height: 48,
                                     flexShrink: 0
                                 }}>
-                                    <UserOutlined style={{ fontSize: '24px', color: '#00b896' }} />
+                                    <UserOutlined style={{ fontSize: '24px', color: tokens.colorPrimary }} />
                                 </div>
                             </div>
                         </Card>

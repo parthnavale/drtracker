@@ -6,6 +6,7 @@ import HeaderBar from "./components/HeaderBar";
 import ThemeCustomizer from "./components/ThemeCustomizer";
 import OverviewPage from "./pages/OverviewPage";
 import PatientsPage from "./pages/PatientsPage";
+import PatientInsightsPage from "./pages/PatientInsightsPage";
 import MedicineStockPage from "./pages/MedicineStockPage";
 import { ThemeContext } from "./themeContext";
 import "./index.css";
@@ -59,6 +60,7 @@ export default function App() {
               <Routes>
                 <Route path="/overview" element={<OverviewPage />} />
                 <Route path="/patients" element={<PatientsPage />} />
+                <Route path="/patient-insights" element={<PatientInsightsPage />} />
                 <Route path="/medicine-stock" element={<MedicineStockPage />} />
                 <Route path="/" element={<Navigate to="/overview" replace />} />
               </Routes>
